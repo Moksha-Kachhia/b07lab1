@@ -1,6 +1,4 @@
-This repository is for the first lab in CSCB07!
-
-Contains a polynomial file and driver. 
+This repository is for the first lab in CSCB07--it contains a polynomial and driver file! 
 
 Polynomial File: 
 
