@@ -11,10 +11,10 @@ No-argument constructor: Initializes the polynomial to zero ([0]).
 Parameterized constructor: Takes an array of non-zero doubles and ints to set the coefficients and powers.
 
 ### Methods:
-add(Polynomial p): Returns type polynomial containing the sum of the current polynomial and the polynomial p.
-evaluate(double x): Returns a double that represents the polynomial's evaluation for a given value of (x).
+- add(Polynomial p): Returns type polynomial containing the sum of the current polynomial and the polynomial p.
+- evaluate(double x): Returns a double that represents the polynomial's evaluation for a given value of (x).
 Example: For the polynomial 6 - 2x + 5x^3, evaluate(-1) returns 3.
-hasRoot(double x): Returns true if the given value of (x) is a root of the polynomial (i.e., if the polynomial evaluates to zero for that value).
+- hasRoot(double x): Returns true if the given value of (x) is a root of the polynomial (i.e., if the polynomial evaluates to zero for that value).
 
 ## Driver File: 
 Tests the constructors, add, evaluate, example and hasRoot functions in the Polynomial file. 
