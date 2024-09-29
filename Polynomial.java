@@ -1,5 +1,8 @@
-import java.util.HashMap; 
-
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
 public class Polynomial {
 	public double [] coefs;
 	public int [] powers; 
@@ -14,6 +17,7 @@ public class Polynomial {
 		this.powers = powers; 
 	}
 	
+
 	public Polynomial mapToPolynomial(HashMap<Integer, Double> p) {
 		//Create a Polynomial for the non-zero coefs 
 		int polyLen = 0;

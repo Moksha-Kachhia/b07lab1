@@ -45,14 +45,5 @@ public class Driver {
 		System.out.println("Case 7: multiplying P1 and P0");
 		System.out.println("P1xP2: " + m2.polyToString());
 		System.out.println("Passed Case 7");
-
-
-
-		//System.out.println("s(0.1) = " + s.evaluate(0.1));
-		
-//		if(s.hasRoot(1))
-//			System.out.println("1 is a root of s");
-//		else
-//			System.out.println("1 is not a root of s");
 	}
 }
