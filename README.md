@@ -1,10 +1,10 @@
-# B07 Lab #2 Repo :D
+# B07 Lab #2 Branch :D
 This repository is for the second lab in CSCB07--it contains a polynomial and driver file! 
 
 ## Polynomial File: 
 
 ### Field: An array of doubles representing the non-zero coefficients and an array of ints representing the powers of the polynomial.
-Example: The polynomial (6 - 2x + 5x^3) is represented as [6, -2, 5] [0, 1, 3].
+Example: The polynomial 6 - 2x + 5x^3 is represented as [6, -2, 5] [0, 1, 3].
 
 ### Constructors:
 No-argument constructor: Initializes the polynomial to zero ([0]).
