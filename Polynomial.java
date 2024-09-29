@@ -1,56 +1,46 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.File;   
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 import java.util.HashMap;
 public class Polynomial {
 	public double [] coefs;
 	public int [] powers; 
 	
 	public Polynomial() {
+		//no argument constructor
 		this.coefs = null; 
 		this.powers = null;
 	}
 	
 	public Polynomial(double [] coefs, int [] powers) {
+		//coef and power array argument constructor
 		this.coefs = coefs;
 		this.powers = powers; 
 	}
-	
 
-	public Polynomial mapToPolynomial(HashMap<Integer, Double> p) {
-		//Create a Polynomial for the non-zero coefs 
-		int polyLen = 0;
-		if(p.isEmpty()){
-			return new Polynomial(); 
+
+	public Polynomial(File file) {
+		//file argument constructor 
+        HashMap<Integer, Double> poly = new HashMap<>();
+		try {
+		Scanner myReader = new Scanner(file);
+		String p = myReader.nextLine();
+		lineParse(p, poly);
+		myReader.close();
+		} catch (FileNotFoundException e) {
+		System.out.println("An error occurred.");
+		e.printStackTrace();
 		}
 		
-		for(double i : p.values()) {
-			if(i != 0){
-				polyLen++; 
-			}
-		}
-		
-		if (polyLen == 0) { //if the map has no non-zero coefs 
-			return new Polynomial(); 
-		}
-		
-		double [] coefs = new double[polyLen]; 
-		int [] powers = new int[polyLen]; 
-		int ind = 0; //keeping track of array index
-		
-		for(int i: p.keySet()) { //populating the arrays
-			powers[ind] = i;
-			coefs[ind] = p.get(i);
-			ind++;
-		}
-		
-		return new Polynomial(coefs, powers);
+		Polynomial r = mapToPolynomial(poly); 
+		this.coefs = r.coefs; 
+		this.powers = r.powers;
 	}
-	
+
 	public HashMap<Integer, Double> polynomialToMap(Polynomial p) {
 		//Create a hashmap from a polynomial
-
 		if (p.coefs == null){
 			return new HashMap<>();
 		}
@@ -67,7 +57,83 @@ public class Polynomial {
 		}
 		return res;
 	}
-	
+
+	public Polynomial mapToPolynomial(HashMap<Integer, Double> p) {
+		//Create a Polynomial for the non-zero coefs 
+		int polyLen = 0;
+		if(p.isEmpty()){
+			return new Polynomial(); 
+		}
+		for(double i : p.values()) {
+			if(i != 0){
+				polyLen++; 
+			}
+		}
+		if (polyLen == 0) {  
+			return new Polynomial(); 
+		}
+
+		double [] coefs = new double[polyLen]; 
+		int [] powers = new int[polyLen]; 
+		int ind = 0;  
+		for(int i: p.keySet()) {  
+			powers[ind] = i;
+			coefs[ind] = p.get(i);
+			ind++;
+		}
+		return new Polynomial(coefs, powers);
+	}
+
+	private void lineParse(String p, HashMap<Integer, Double> poly) {
+		//parse the file
+		p = p.trim(); 
+        String[] terms = p.split("(?=[+-])");  
+
+        for (String term : terms) { 
+            term = term.trim();  
+
+            double coef = 1.0;
+            int power = 0;
+
+            if (term.contains("x")) {
+                String[] parts = term.split("x"); //up to 3 parts
+                if (parts[0].isEmpty() || parts[0].equals("+")) { //coef
+                    coef = 1.0;
+                } 
+				else if (parts[0].equals("-")) {
+                    coef = -1.0;
+                } 
+				else {
+                    coef = Double.parseDouble(parts[0]);
+                }
+
+                if (parts.length > 1) { //power
+                    if (!parts[1].isEmpty()) {
+                        power = Integer.parseInt(parts[1].substring(1));
+                    } 
+					else {
+                        power = 1; // If no power is specified, it's x^1
+                    }
+                }
+            } else { //constant term 
+                coef = Double.parseDouble(term); 
+                power = 0; 
+            }
+            poly.put(power, coef);
+        }
+    }
+
+	public void saveToFile(String name){
+		try{ 
+			FileWriter myWriter = new FileWriter(name);
+            String pString = polyToString();  
+            myWriter.write(pString);  
+			myWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace(); // Handle the exception
+        }
+	}
+
 	public String polyToString() { //convert a polynomial to a string
 		HashMap<Integer, Double> p = polynomialToMap(this);
 		String res = ""; 
@@ -156,7 +222,7 @@ public class Polynomial {
 	public Polynomial multiply(Polynomial poly){
 		HashMap<Integer, Double> instPoly = polynomialToMap(this); 
 		HashMap<Integer, Double> times = polynomialToMap(poly);//map with all in poly
-		HashMap<Integer, Double> res = new HashMap<Integer, Double>();
+		HashMap<Integer, Double> res = new HashMap<>();
 		for (int i : instPoly.keySet()) { //go through and add the products to res
 			double coef1 = instPoly.get(i); 
 			for(int j : times.keySet()){
