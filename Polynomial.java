@@ -148,7 +148,28 @@ public class Polynomial {
 		}
 		return false; 
 	}
-	
+
+	public Polynomial multiply(Polynomial poly){
+		HashMap<Integer, Double> instPoly = polynomialToMap(this); 
+		HashMap<Integer, Double> times = polynomialToMap(poly);//map with all in poly
+		HashMap<Integer, Double> res = new HashMap<Integer, Double>();
+		for (int i : instPoly.keySet()) { //go through and add the products to res
+			double coef1 = instPoly.get(i); 
+			for(int j : times.keySet()){
+				double coef2 = times.get(j);
+				int newPow = (i + j); 
+				double newCoef = coef1*coef2; 
+
+				if (res.containsKey(newPow)){ //adding to coef
+					res.compute(newPow, (k,v) -> v + newCoef); 
+				}
+				else {//adding new power and coef
+					res.put(newPow, newCoef); 
+				}
+			}
+		}
+		return mapToPolynomial(res);
+	}
 	
 	
 }

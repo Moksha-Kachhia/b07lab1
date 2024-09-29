@@ -13,6 +13,10 @@ public class Driver {
 		
 		Polynomial s1 = p1.add(p2);
 		Polynomial s2 = p1.add(p0);
+		Polynomial m1 = p1.multiply(p2);
+		Polynomial m2 = p1.multiply(p0);
+
+
 
 		System.out.println("Case 1: creating p0, p1 & p2"); 
 		System.out.println("P0: " + p0.polyToString() + " | P1: " + p1.polyToString() + " | P2: " + p2.polyToString());
@@ -33,6 +37,14 @@ public class Driver {
 		System.out.println("Case 5: checking 1 is not a root of p1, 0 is a root of P2 and 0.0001 is a root of P0.");
 		System.out.println("P1: " + p1.hasRoot(1) + " | P2: " + p2.hasRoot(0) + " | P0: " + p0.hasRoot(0.0001));
 		System.out.println("Passed Case 5");
+
+		System.out.println("Case 6: multiplying P1 and P2");
+		System.out.println("P1xP2: "+ p1.polyToString() + " x " + p2.polyToString() + " = " + m1.polyToString());
+		System.out.println("Passed Case 6");
+
+		System.out.println("Case 7: multiplying P1 and P0");
+		System.out.println("P1xP2: " + m2.polyToString());
+		System.out.println("Passed Case 7");
 
 
 
