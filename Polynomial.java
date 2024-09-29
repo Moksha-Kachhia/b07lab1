@@ -170,6 +170,4 @@ public class Polynomial {
 		}
 		return mapToPolynomial(res);
 	}
-	
-	
 }
