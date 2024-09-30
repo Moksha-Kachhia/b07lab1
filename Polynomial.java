@@ -108,35 +108,18 @@ public class Polynomial {
             int power = 0;
 
             if (term.contains("x")) {
-                String[] parts = term.split("x"); //up to 3 parts
-                if (parts[0].isEmpty() || parts[0].equals("+")) { //coef
-                    coef = 1.0;
-                } 
-				else if (parts[0].equals("-")) {
-                    coef = -1.0;
-                } 
-				else {
-					try {
-						coef = Double.parseDouble(parts[0]); 
-					} catch (NumberFormatException e) {
-						System.out.println("Error parsing coefficient: " + parts[0]);
-					}
-                }
-
-                if (parts.length > 1) { //power
-                    if (parts[1].isEmpty()) {
-						power = 1;  
-					} else {
-						try {
-							power = Integer.parseInt(parts[1]); // Parse the power directly
-						} catch (NumberFormatException e) {
-							System.out.println("Error parsing power: " + parts[1]);
-						}
-					}
-				} else {
-					power = 1; // If there is no part after x, assume it's x^1
+                String[] parts = term.split("x"); //2 parts [coef, power]
+				try { //coef
+					coef = Double.parseDouble(parts[0]); 
+				} catch (NumberFormatException e) {
+					System.out.println("Error parsing coefficient: " + parts[0]);
 				}
-		
+
+                try { //power
+					power = Integer.parseInt(parts[1]); // Parse the power directly
+				} catch (NumberFormatException e) {
+					System.out.println("Error parsing power: " + parts[1]);
+				}
             } 
 			else { //constant term 
                 try {
@@ -180,21 +163,7 @@ public class Polynomial {
 				}
 			}
 
-			else if(i == 1){ //x^1 ie. x
-				if(res == ""){
-					res = res + coef + "x"; 
-				}
-				else{
-					if(coef < 0){
-						res = res + coef + "x"; 
-					}
-					else{
-						res = res + "+" + coef + "x"; 
-					}
-				}
-			}
-
-			else{// i in naturals > 1
+			else{// i > 0
 				if(res == ""){
 					res = res + coef + "x" + i; 
 				}
