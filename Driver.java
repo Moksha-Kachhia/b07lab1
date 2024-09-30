@@ -1,3 +1,4 @@
+import java.io.File;   
 public class Driver {
 	public static void main(String [] args) {
 		
@@ -15,7 +16,6 @@ public class Driver {
 		Polynomial s2 = p1.add(p0);
 		Polynomial m1 = p1.multiply(p2);
 		Polynomial m2 = p1.multiply(p0);
-
 
 
 		System.out.println("Case 1: creating p0, p1 & p2"); 
@@ -45,5 +45,38 @@ public class Driver {
 		System.out.println("Case 7: multiplying P1 and P0");
 		System.out.println("P1xP2: " + m2.polyToString());
 		System.out.println("Passed Case 7");
+
+		File r1 = new File("Read.txt");
+		if (r1.exists()) {
+
+			Polynomial rp1 = new Polynomial(r1); 
+			System.out.println("Case 8: creating polynomial from file");
+			System.out.println("R: " + rp1.polyToString());
+			System.out.println("Passed Case 8");
+
+			File r2 = new File("Write.txt");
+			if (r2.exists()) {
+				Polynomial rp2 = new Polynomial(r2); 
+				System.out.println("Case 9: creating polynomial from empty file");
+				System.out.println("R: " + rp2.polyToString());
+			} 
+			else {
+				System.out.println("The file does not exist.");
+			}
+			System.out.println("Passed Case 9");
+			rp1.saveToFile("Write.txt");
+			if (r2.exists()) {
+				Polynomial rp3 = new Polynomial(r2); 
+				System.out.println("Case 10: saving polynomial to file");
+				System.out.println("R: " + rp3.polyToString());
+			} 
+			else {
+				System.out.println("The file does not exist.");
+			} System.out.println("Passed Case 10");
+		} 
+		else {
+			System.out.println("The file does not exist.");
+		}
+
 	}
 }

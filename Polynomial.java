@@ -26,7 +26,19 @@ public class Polynomial {
         HashMap<Integer, Double> poly = new HashMap<>();
 		try {
 		Scanner myReader = new Scanner(file);
+		if (file.length() == 0){
+			myReader.close();
+			this.coefs = null;
+			this.powers = null;
+			return;
+		}
 		String p = myReader.nextLine();
+		if (p == null || p.trim().isEmpty()) {
+			myReader.close();
+			this.coefs = null;
+			this.powers = null;
+			return;
+		}
 		lineParse(p, poly);
 		myReader.close();
 		} catch (FileNotFoundException e) {
@@ -104,20 +116,35 @@ public class Polynomial {
                     coef = -1.0;
                 } 
 				else {
-                    coef = Double.parseDouble(parts[0]);
+					try {
+						coef = Double.parseDouble(parts[0]); 
+					} catch (NumberFormatException e) {
+						System.out.println("Error parsing coefficient: " + parts[0]);
+					}
                 }
 
                 if (parts.length > 1) { //power
-                    if (!parts[1].isEmpty()) {
-                        power = Integer.parseInt(parts[1].substring(1));
-                    } 
-					else {
-                        power = 1; // If no power is specified, it's x^1
-                    }
-                }
-            } else { //constant term 
-                coef = Double.parseDouble(term); 
-                power = 0; 
+                    if (parts[1].isEmpty()) {
+						power = 1;  
+					} else {
+						try {
+							power = Integer.parseInt(parts[1]); // Parse the power directly
+						} catch (NumberFormatException e) {
+							System.out.println("Error parsing power: " + parts[1]);
+						}
+					}
+				} else {
+					power = 1; // If there is no part after x, assume it's x^1
+				}
+		
+            } 
+			else { //constant term 
+                try {
+					coef = Double.parseDouble(term); 
+					power = 0; 
+				} catch (NumberFormatException e) {
+					System.out.println("Error parsing constant term: " + term);
+				}
             }
             poly.put(power, coef);
         }
